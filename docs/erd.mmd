@@ -1,0 +1,56 @@
+---
+title: Olist source data - ERD (crow's foot)
+---
+erDiagram
+    CUSTOMERS ||--|{ ORDERS : "places"
+    ORDERS ||--o{ ORDER_ITEMS : "contains"
+    PRODUCTS ||--o{ ORDER_ITEMS : "is sold as"
+    SELLERS ||--o{ ORDER_ITEMS : "fulfils"
+
+    CUSTOMERS {
+        VARCHAR customer_id PK
+        VARCHAR customer_unique_id
+        VARCHAR customer_zip_code_prefix
+        VARCHAR customer_city
+        VARCHAR customer_state
+    }
+
+    ORDERS {
+        VARCHAR order_id PK
+        VARCHAR customer_id FK
+        VARCHAR order_status
+        TIMESTAMP order_purchase_timestamp
+        TIMESTAMP order_approved_at
+        TIMESTAMP order_delivered_carrier_date
+        TIMESTAMP order_delivered_customer_date
+        TIMESTAMP order_estimated_delivery_date
+    }
+
+    ORDER_ITEMS {
+        VARCHAR order_id PK, FK
+        BIGINT order_item_id PK
+        VARCHAR product_id FK
+        VARCHAR seller_id FK
+        TIMESTAMP shipping_limit_date
+        DOUBLE price
+        DOUBLE freight_value
+    }
+
+    PRODUCTS {
+        VARCHAR product_id PK
+        VARCHAR product_category_name
+        BIGINT product_name_lenght
+        BIGINT product_description_lenght
+        BIGINT product_photos_qty
+        BIGINT product_weight_g
+        BIGINT product_length_cm
+        BIGINT product_height_cm
+        BIGINT product_width_cm
+    }
+
+    SELLERS {
+        VARCHAR seller_id PK
+        VARCHAR seller_zip_code_prefix
+        VARCHAR seller_city
+        VARCHAR seller_state
+    }
